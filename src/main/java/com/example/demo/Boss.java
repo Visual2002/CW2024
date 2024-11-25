@@ -19,6 +19,7 @@ public class Boss extends FighterPlane {
 	private static final int Y_POSITION_UPPER_BOUND = -100;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 500;
+	private static ShieldImage shield;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
@@ -32,6 +33,7 @@ public class Boss extends FighterPlane {
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
 		isShielded = false;
+		shield = new ShieldImage(1000, 90);
 		initializeMovePattern();
 	}
 
@@ -73,9 +75,16 @@ public class Boss extends FighterPlane {
 	}
 
 	private void updateShield() {
-		if (isShielded) framesWithShieldActivated++;
+		if (isShielded) {
+			framesWithShieldActivated++;
+			shield.showShield();
+		}
 		else if (shieldShouldBeActivated()) activateShield();	
-		if (shieldExhausted()) deactivateShield();
+		if (shieldExhausted()) {
+			deactivateShield();
+			shield.hideShield();
+		}
+
 	}
 
 	private int getNextMove() {
@@ -117,4 +126,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
+	public ShieldImage getShield() {
+		return shield;
+	}
 }
