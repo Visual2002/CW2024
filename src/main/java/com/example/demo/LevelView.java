@@ -42,4 +42,8 @@ public class LevelView {
 		}
 	}
 
+	public Group getRoot() {
+		return root;
+	}
+
 }
